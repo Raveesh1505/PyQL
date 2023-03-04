@@ -1,0 +1,64 @@
+-- Database clearing and setup
+
+DROP DATABASE IF EXISTS organization;
+
+CREATE DATABASE organization;
+
+USE organization;
+
+-- Creating employee table
+
+CREATE TABLE employee (
+	SSN INT(10) PRIMARY KEY,
+	NAME VARCHAR(50),
+	SEX CHAR(1),
+	DOB DATE,
+	ADDRESS VARCHAR(50),
+	SALARY FLOAT(8,3)
+);
+
+-- Creating department table
+
+CREATE TABLE department (
+	DEP_NUMBER INT(5) PRIMARY KEY,	
+	DEP_NAME VARCHAR(30),
+	DEP_LOCATION VARCHAR(30)
+);
+
+-- Creating table projects
+
+CREATE TABLE projects (
+	PRO_NUMBER VARCHAR(10) PRIMARY KEY,
+	PRO_NAME VARCHAR(50),
+	PRO_LOCATION VARCHAR(50)
+);
+
+-- Creating table dependants
+
+CREATE TABLE dependants (
+	E_SSN INT(10) PRIMARY KEY,
+	DEP_NAME VARCHAR(50),
+	DEP_SEX CHAR(1),
+	DOB DATE,
+	RELATIONSHIP VARCHAR(20)
+);
+
+-- Creating works on table
+
+CREATE TABLE works_on (
+	SSN INT(10),
+	PRO_NUMBER VARCHAR(10),
+	HOURS FLOAT(4, 2),
+	FOREIGN KEY(SSN) REFERENCES employee(SSN),
+	FOREIGN KEY(PRO_NUMBER) REFERENCES projects(PRO_NUMBER)
+);
+
+-- Creating manager table
+
+CREATE TABLE manager (
+	SSN INT(10) PRIMARY KEY,
+	DEP_NUMBER INT(5),
+	START_DATE DATE,
+	FOREIGN KEY(SSN) REFERENCES employee(SSN),
+	FOREIGN KEY(DEP_NUMBER) REFERENCES department(DEP_NUMBER)
+);
